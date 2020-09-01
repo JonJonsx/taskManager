@@ -7,6 +7,8 @@ package br.com.jonatan.gerenciadordetarefas;
 
 import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -14,24 +16,31 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Tela1 extends javax.swing.JFrame {
 
-    Integer minCpu = 100;
-    Integer maxCpu = 0;
-    Integer somaCpu = 0;
-    Integer qtdCpu = 0;
-    Integer mediaCpu = 0;
+    Computador cpu = new Computador();
+    Computador memoria = new Computador();
+    Computador disco = new Computador();
 
-    Integer minDisco = 100;
-    Integer maxDisco = 0;
-    Integer somaDisco = 0;
-    Integer qtdDisco = 0;
-    Integer mediaDisco = 0;
-
-    Integer minMemoria = 100;
-    Integer maxMemoria = 0;
-    Integer somaMemoria = 0;
-    Integer qtdMemoria = 0;
-    Integer mediaMemoria = 0;
-
+    void preencher(Computador componente,Integer randomComponente,JLabel minLabel,JLabel maxLabel, JLabel mediaLabel){
+        componente.soma += randomComponente;
+        componente.qtd += 1;
+        
+        if (componente.min > randomComponente) {
+            minLabel.setText(randomComponente + "%");
+            componente.min = randomComponente;
+        }
+        if (componente.max < randomComponente) {
+            maxLabel.setText(randomComponente + "%");
+            componente.max = randomComponente;
+        }
+        componente.media = componente.soma / componente.qtd;
+        mediaLabel.setText(cpu.media + "%");
+    }
+    void resultProgress(JProgressBar progress,Integer randomComponente){
+        progress.setStringPainted(true);
+        progress.setForeground(Color.black);
+        progress.setValue(randomComponente);
+        progress.setString(randomComponente + "%");
+    }
     /**
      * Creates new form Tela1
      */
@@ -323,72 +332,17 @@ public class Tela1 extends javax.swing.JFrame {
 
     private void btnLeituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeituraActionPerformed
         // Introduzindo valor na barra
-        pbCpu.setStringPainted(true);
-        pbCpu.setForeground(Color.black);
-        pbMemoria.setStringPainted(true);
-        pbMemoria.setForeground(Color.black);
-        pbDisco.setStringPainted(true);
-        pbDisco.setForeground(Color.black);
-
-        // Random
-        Integer cpu = ThreadLocalRandom.current().nextInt(0, 100);
-        Integer memoria = ThreadLocalRandom.current().nextInt(0, 100);
-        Integer disco = ThreadLocalRandom.current().nextInt(0, 100);
-
-        //MAX, MIN E MEDIA DA CPU
-        somaCpu += cpu;
-        qtdCpu += 1;
-
-        if (minCpu > cpu) {
-            lbMinCpu.setText(cpu + "%");
-            minCpu = cpu;
-        }
-        if (maxCpu < cpu) {
-            lbMaxCpu.setText(cpu + "%");
-            maxCpu = cpu;
-        }
-        mediaCpu = somaCpu / qtdCpu;
-
-        // MAX, MIN E MEDIA DO DA MEMORIA
-        somaMemoria += memoria;
-        qtdMemoria += 1;
-        if (minMemoria > memoria) {
-            lbMinMemoria.setText(memoria + "%");
-            minMemoria = memoria;
-        }
-        if (maxMemoria < memoria) {
-            lbMaxMemoria.setText(memoria + "%");
-            maxMemoria = memoria;
-        }
-        mediaMemoria = somaMemoria / qtdMemoria;
-
-        // MAX, MIN E MEDIA DO DISCO
-        somaDisco += disco;
-        qtdDisco += 1;
-
-        if (minDisco > disco) {
-            lbMinDisco.setText(disco + "%");
-            minDisco = disco;
-        }
-        if (maxDisco < disco) {
-            lbMaxDisco.setText(disco + "%");
-            maxDisco = disco;
-        }
-        mediaDisco = somaDisco / qtdDisco;
-
-        // setando valores
-        lbMediaCpu.setText(mediaCpu + "%");
-        lbMediaMemoria.setText(mediaMemoria + "%");
-        lbMediaDisco.setText(mediaDisco + "%");
-
-        pbCpu.setValue(cpu);
-        pbCpu.setString(cpu + "%");
-
-        pbMemoria.setValue(memoria);
-        pbMemoria.setString(memoria + "%");
-
-        pbDisco.setValue(disco);
-        pbDisco.setString(disco + "%");
+        
+        Integer randomCpu = ThreadLocalRandom.current().nextInt(0, 100);
+        Integer randomMemoria = ThreadLocalRandom.current().nextInt(0, 100);
+        Integer randomDisco = ThreadLocalRandom.current().nextInt(0, 100);
+        
+        preencher(cpu, randomCpu, lbMinCpu, lbMaxCpu, lbMediaCpu);
+        preencher(memoria, randomMemoria, lbMinMemoria, lbMaxMemoria, lbMediaMemoria);
+        preencher(disco, randomDisco, lbMinDisco, lbMaxDisco, lbMediaDisco);
+        resultProgress(pbCpu, randomCpu);
+        resultProgress(pbMemoria, randomMemoria);
+        resultProgress(pbDisco, randomDisco);
 
     }//GEN-LAST:event_btnLeituraActionPerformed
 
