@@ -331,8 +331,6 @@ public class Tela1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLeituraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeituraActionPerformed
-        // Introduzindo valor na barra
-        
         Integer randomCpu = ThreadLocalRandom.current().nextInt(0, 100);
         Integer randomMemoria = ThreadLocalRandom.current().nextInt(0, 100);
         Integer randomDisco = ThreadLocalRandom.current().nextInt(0, 100);
@@ -343,7 +341,6 @@ public class Tela1 extends javax.swing.JFrame {
         resultProgress(pbCpu, randomCpu);
         resultProgress(pbMemoria, randomMemoria);
         resultProgress(pbDisco, randomDisco);
-
     }//GEN-LAST:event_btnLeituraActionPerformed
 
     /**
